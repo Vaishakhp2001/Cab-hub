@@ -4,11 +4,6 @@ import userRoutes from './routes/userRoutes.js'
 import {connectDB} from './config/db.js'
 import { notFound,errorHandler} from './middleware/errorMiddleware.js'
 import path from 'path'
-// import { dirname } from 'path'
-// import { fileURLToPath } from 'url'
-// import process from 'process'
-
-// const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const app = express()
 
@@ -18,19 +13,12 @@ config()
 
 connectDB() 
 
-app.use('/api/users',userRoutes)
+app.get('/',(req,res) => {
+    console.log("running")
+    res.send('Api is running')
+    })
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname,'/frontend/build')));
-    app.get('*',(req,res) => {
-        res.sendFile(path.join(__dirname,'frontend','build','index.html'));
-    })
-}
-else {
-    app.get('/',(req,res) => {
-        res.send('Api is running')
-    })
-}
+app.use('/api/users',userRoutes)
 
 app.use(notFound)
 
