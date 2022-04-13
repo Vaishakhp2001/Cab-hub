@@ -7,9 +7,11 @@ import bcrypt from 'bcryptjs'
 const authUser = asyncHandler(async (req,res) => {
    
     const { email, password } = req.body
+    
+    console.log("body:",req.body)
 
     const user = await User.findOne({ email })
-
+    console.log("User:",user)
     
     if(user && (await user.matchPassword(password))) {
         
